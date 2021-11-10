@@ -18,7 +18,7 @@ function App() {
     <Auth0Provider
       domain='misiontic-concesionario.us.auth0.com'
       clientId='WsdhjjQzDLIZEHA6ouuxXGxFONFGAQ4g'
-      redirectUri='http://localhost:3000/admin'
+      redirectUri={window.location.origin}
       audience='api-autenticacion-concesionario-mintic'
     >
       <UserContext.Provider value={{ userData, setUserData }}>
