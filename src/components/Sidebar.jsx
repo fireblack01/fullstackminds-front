@@ -15,8 +15,8 @@ const SidebarLinks = () => {
 const Logo = () => {
   return (
     <div className='py-3 w-full flex flex-col items-center justify-center'>
-      <img src='logo.png' alt='Logo' className='h-16' />
-      <span className='my-2 text-xl font-bold text-center'>Título de Mi Aplicación</span>
+      <img src='mind-full.png' alt='Logo' className='h-16' />
+      <span className='my-2 text-xl font-bold text-center'>Full Stack Minds Admin</span>
     </div>
   );
 };
@@ -47,7 +47,7 @@ const ResponsiveSidebar = () => {
   return (
     <div>
       <div
-        className='sidebar h-full z-40 absolute md:h-full sm:hidden transition duration-150 ease-in-out'
+        className='sidebar bg-white h-full z-40 absolute md:h-full sm:hidden transition duration-150 ease-in-out'
         id='mobile-nav'
       >
         <div className='px-8'>
@@ -66,12 +66,12 @@ const SidebarRoute = ({ to, title, icon }) => {
         to={to}
         className={({ isActive }) =>
           isActive
-            ? 'sidebar-route text-white bg-indigo-700'
-            : 'sidebar-route text-gray-900 hover:text-white hover:bg-indigo-400'
+            ? 'sidebar-route shadow-lg text-white bg-blue-500 '
+            : 'transition sidebar-route text-gray-900 hover:text-white hover:bg-blue-400 hover:bg-opacity-80'
         }
       >
         <div className='flex items-center'>
-          <i className={icon} />
+          <i className={`${icon} mr-1`} />
           <span className='text-sm  ml-2'>{title}</span>
         </div>
       </NavLink>

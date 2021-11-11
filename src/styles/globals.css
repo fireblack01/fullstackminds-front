@@ -2,10 +2,34 @@
 @tailwind components;
 @tailwind utilities;
 
+body{
+  @apply font-sans;
+}
+
 .sidebar {
-  @apply w-64 bg-gray-200 shadow flex-col justify-between;
+  @apply w-64 shadow-xl items-center justify-between;
 }
 
 .sidebar-route {
-  @apply rounded-md flex w-full justify-between cursor-pointer items-center m-3 p-3;
+  @apply rounded flex w-full justify-between cursor-pointer items-center my-3 p-3;
+}
+
+::-webkit-scrollbar {
+  width: 16px;
+  height: 16px;
+}
+
+::-webkit-scrollbar-track {
+  border-radius: 100vh;
+  background: #edf2f7;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #cbd5e0;
+  border-radius: 100vh;
+  border: 3px solid #edf2f7;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #a0aec0;
 }
