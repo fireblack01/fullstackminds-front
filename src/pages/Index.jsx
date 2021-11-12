@@ -18,6 +18,11 @@ const Index = () => {
         <span className='font-bold'>Email:</span> einermedina15@gmail.com <br />
         <span className='font-bold'>CC:</span> 1045748822
       </p>
+      <p className='p-5'>
+        <span className='font-bold'>Nombre:</span> Laura Johanna Vera Quintero <br />
+        <span className='font-bold'>Email:</span> lauraveraq@gmail.com <br />
+        <span className='font-bold'>CC:</span> 1018488778
+      </p>
       <p className='p-5'></p>
       <p className='p-5'></p>
     </div>
