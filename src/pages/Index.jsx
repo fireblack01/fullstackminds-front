@@ -2,7 +2,7 @@ import React from 'react';
 
 const Index = () => {
   return (
-    <div className='bg-white shadow-xl h-96'>
+    <div className='bg-white shadow-xl h-auto'>
       <p className='p-5'>
         <span className='font-bold'>Nombre:</span> Juan Diego Valencia Rojas <br />
         <span className='font-bold'>Email:</span> diego.valencr@gmail.com <br />
@@ -23,8 +23,11 @@ const Index = () => {
         <span className='font-bold'>Email:</span> lauraveraq@gmail.com <br />
         <span className='font-bold'>CC:</span> 1018488778
       </p>
-      <p className='p-5'></p>
-      <p className='p-5'></p>
+      <p className='p-5'>
+        <span className='font-bold'>Nombre:</span> Anderson Miguel Landazuri Cocinero <br />
+        <span className='font-bold'>Email:</span> amlandazuric@gmail.com <br />
+        <span className='font-bold'>CC:</span> 1015425982
+      </p>
     </div>
   );
 };
