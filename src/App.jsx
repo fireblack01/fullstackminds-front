@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import PrivateLayout from 'layouts/PrivateLayout';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import { Auth0Provider } from '@auth0/auth0-react';
+import { ApolloProvider, ApolloClient, createHttpLink, InMemoryCache } from '@apollo/client';
+// import { setContext } from '@apollo/client/link/context';
+// import { Auth0Provider } from '@auth0/auth0-react';
 import { UserContext } from 'context/userContext';
 import Index from 'pages/Index';
 import Page2 from 'pages/Page2';
@@ -9,22 +11,47 @@ import IndexCategory1 from 'pages/category1/Index';
 import Category1 from 'pages/category1/CategoryPage1';
 import IndexUsuarios from 'pages/usuarios/Index';
 import GestionUsuarios from "pages/usuarios/Gestion"
+import EditarUsuario from 'pages/usuarios/editar';
+import Register from 'pages/auth/Register';
+import Login from 'pages/auth/Login';
 import 'styles/globals.css';
 import 'styles/tabla.css';
 
-
 // import PrivateRoute from 'components/PrivateRoute';
+// const httpLink = createHttpLink({
+//   uri: 'http://localhost:3001/graphql',
+// });
+
+// const authLink = setContext((_, { headers }) => {
+//   // get the authentication token from local storage if it exists
+//   const token = JSON.parse(localStorage.getItem('token'));
+//   // return the headers to the context so httpLink can read them
+//   return {
+//     headers: {
+//       ...headers,
+//       authorization: token ? `Bearer ${token}` : '',
+//     },
+//   };
+// });
+
+const client = new ApolloClient({
+  cache: new InMemoryCache(),
+  // link: authLink.concat(httpLink),
+  uri: 'http://localhost:3001/graphql',
+});
 
 function App() {
   const [userData, setUserData] = useState({});
 
   return (
-    <Auth0Provider
-      domain="auth-mintic-ingedevs.us.auth0.com"
-      clientId="ijFepcC5ZzLyvSQMLYcIOziFHeRAnM1q"
-      redirectUri={window.location.origin}
-    //audience='api-autenticacion-concesionario-mintic'
-    >
+    <ApolloProvider client={client}>
+      {/* <AuthContext.Provider value={{ authToken, setAuthToken, setToken }}> */}
+      {/* <Auth0Provider
+       domain="auth-mintic-ingedevs.us.auth0.com"
+       clientId="ijFepcC5ZzLyvSQMLYcIOziFHeRAnM1q"
+       redirectUri={window.location.origin}
+       //audience='api-autenticacion-concesionario-mintic'
+     > */}
       <UserContext.Provider value={{ userData, setUserData }}>
         <BrowserRouter>
           <Routes>
@@ -35,11 +62,16 @@ function App() {
               <Route path='category1/page1' element={<Category1 />} />
               <Route path='usuarios' element={<IndexUsuarios />} />
               <Route path='/usuarios/gestion/:id' element={<GestionUsuarios />} />
+              <Route path='/usuarios/editar/:_id' element={<EditarUsuario />} />
+              <Route path='/register' element={<Register />} />
+              <Route path='/login' element={<Login />} />
             </Route>
           </Routes>
         </BrowserRouter>
       </UserContext.Provider>
-    </Auth0Provider>
+      {/* </Auth0Provider> */}
+      {/* </AuthContext.Provider> */}
+    </ApolloProvider>
   );
 }
 

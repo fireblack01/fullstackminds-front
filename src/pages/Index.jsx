@@ -1,8 +1,24 @@
 import React from 'react';
+import { useUser } from 'context/userContext';
 
 const Index = () => {
+  const { userData } = useUser();
+  const data = [userData?.data?.Login];
+
   return (
     <div className='bg-white shadow-xl h-auto'>
+      <p>
+        Logged User:
+        <br />
+        {data &&
+          data?.map((user) => (
+            <>
+              <span>{user?.nombre}</span>
+              <br />
+              <span>{user?.apellido}</span>
+            </>
+          ))}
+      </p>
       <p className='p-5'>
         <span className='font-bold'>Nombre:</span> Juan Diego Valencia Rojas <br />
         <span className='font-bold'>Email:</span> diego.valencr@gmail.com <br />
