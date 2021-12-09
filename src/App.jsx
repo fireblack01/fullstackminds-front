@@ -42,26 +42,26 @@ function App() {
   return (
     <ApolloProvider client={client}>
       {/* <AuthContext.Provider value={{ authToken, setAuthToken, setToken }}> */}
-        {/* <Auth0Provider
+      {/* <Auth0Provider
        domain="auth-mintic-ingedevs.us.auth0.com"
        clientId="ijFepcC5ZzLyvSQMLYcIOziFHeRAnM1q"
        redirectUri={window.location.origin}
        //audience='api-autenticacion-concesionario-mintic'
      > */}
-        <UserContext.Provider value={{ userData, setUserData }}>
-          <BrowserRouter>
-            <Routes>
-              <Route path='/' element={<PrivateLayout />}>
-                <Route path='' element={<Index />} />
-                <Route path='page2' element={<Page2 />} />
-                <Route path='category1' element={<IndexCategory1 />} />
-                <Route path='category1/page1' element={<Category1 />} />
-                <Route path='/usuarios/editar/:_id' element={<EditarUsuario />} />
-              </Route>
-            </Routes>
-          </BrowserRouter>
-        </UserContext.Provider>
-        {/* </Auth0Provider> */}
+      <UserContext.Provider value={{ userData, setUserData }}>
+        <BrowserRouter>
+          <Routes>
+            <Route path='/' element={<PrivateLayout />}>
+              <Route path='' element={<Index />} />
+              <Route path='page2' element={<Page2 />} />
+              <Route path='category1' element={<IndexCategory1 />} />
+              <Route path='category1/page1' element={<Category1 />} />
+              <Route path='/usuarios/editar/:_id' element={<EditarUsuario />} />
+            </Route>
+          </Routes>
+        </BrowserRouter>
+      </UserContext.Provider>
+      {/* </Auth0Provider> */}
       {/* </AuthContext.Provider> */}
     </ApolloProvider>
   );
