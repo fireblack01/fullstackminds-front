@@ -7,7 +7,11 @@ import Index from 'pages/Index';
 import Page2 from 'pages/Page2';
 import IndexCategory1 from 'pages/category1/Index';
 import Category1 from 'pages/category1/CategoryPage1';
+import IndexUsuarios from 'pages/usuarios/Index';
+import GestionUsuarios from "pages/usuarios/Gestion"
 import 'styles/globals.css';
+import 'styles/tabla.css';
+
 
 // import PrivateRoute from 'components/PrivateRoute';
 
@@ -19,7 +23,7 @@ function App() {
       domain="auth-mintic-ingedevs.us.auth0.com"
       clientId="ijFepcC5ZzLyvSQMLYcIOziFHeRAnM1q"
       redirectUri={window.location.origin}
-      //audience='api-autenticacion-concesionario-mintic'
+    //audience='api-autenticacion-concesionario-mintic'
     >
       <UserContext.Provider value={{ userData, setUserData }}>
         <BrowserRouter>
@@ -29,6 +33,8 @@ function App() {
               <Route path='page2' element={<Page2 />} />
               <Route path='category1' element={<IndexCategory1 />} />
               <Route path='category1/page1' element={<Category1 />} />
+              <Route path='usuarios' element={<IndexUsuarios />} />
+              <Route path='/usuarios/gestion/:id' element={<GestionUsuarios />} />
             </Route>
           </Routes>
         </BrowserRouter>
