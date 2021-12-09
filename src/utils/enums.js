@@ -1,8 +1,14 @@
 // Para Editar Usuario
 const Enum_EstadoUsuario = {
-    PENDIENTE: 'Pendiente',
-    AUTORIZADO: 'Autorizado',
-    NO_AUTORIZADO: 'No Autorizado',
+  PENDIENTE: 'Pendiente',
+  AUTORIZADO: 'Autorizado',
+  NO_AUTORIZADO: 'No Autorizado',
 };
 
-export { Enum_EstadoUsuario };
+const Enum_Rol = {
+  ESTUDIANTE: 'Estudiante',
+  LIDER: 'Lider',
+  ADMINISTRADOR: 'Administrador',
+};
+
+export { Enum_EstadoUsuario, Enum_Rol };
