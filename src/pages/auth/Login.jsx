@@ -2,11 +2,12 @@ import { useState } from 'react';
 import { useMutation } from '@apollo/client';
 import { LOGIN } from 'graphql/auth/mutations';
 import { useUser } from 'context/userContext';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 
 const Login = () => {
   const navigate = useNavigate();
-  const { setUserData } = useUser();
+  const { userData, setUserData } = useUser();
+  const loggedUser = [userData?.data?.Login];
   const [correo, setCorreo] = useState('');
   const [password, setPassword] = useState('');
 
@@ -20,6 +21,7 @@ const Login = () => {
         password: password,
       },
     }).then((user) => setUserData(user));
+
     navigate('/');
   };
 
@@ -33,6 +35,11 @@ const Login = () => {
         <input type='password' onChange={(e) => setPassword(e.target.value)} />
         <br />
         <input type='submit' value='Login' />
+        <br />
+        <br />
+        <Link to='/register'>
+          <button>Register</button>
+        </Link>
       </form>
     </div>
   );
