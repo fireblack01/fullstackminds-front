@@ -13,6 +13,7 @@ const SidebarLinks = () => {
         <SidebarRoute to='/category1' title='Catego 1' icon='fab fa-amazon' />
         <SidebarRoute to='/category1/page1' title='Test' icon='fas fa-car' />
         <SidebarRoute to='/usuarios' title='Usuarios' icon="fas fa-users" />
+        <SidebarRoute to={'/usuarios/editar/' +data[0]?._id} title="Mi Perfil" icon='fas fa-user' />
       </ul>
     );
   } else {

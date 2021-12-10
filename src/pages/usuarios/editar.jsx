@@ -8,8 +8,15 @@ import ButtonLoading from 'components/ButtonLoading';
 import DropDown from 'components/Dropdown';
 import useFormData from 'hooks/useFormData';
 import { Enum_EstadoUsuario } from 'utils/enums';
+import { Enum_Rol } from 'utils/enums';
+import { useUser } from 'context/userContext';
+
+
 
 const EditarUsuario = () => {
+    const { userData } = useUser();
+    const data = [userData?.data?.Login];
+    var disabled_byRol = null;
     const { form, formData, updateFormData } = useFormData(null);
     const { _id } = useParams();
 
@@ -20,14 +27,14 @@ const EditarUsuario = () => {
     } = useQuery(GET_USUARIO, {
         variables: { _id },
     });
-
+    console.log(queryData)
 
     const [editarUsuario, { data: mutationData, loading: mutationLoading, error: mutationError }] =
         useMutation(EDITAR_USUARIO);
 
     const submitForm = (e) => {
         e.preventDefault();
-        delete formData.rol;
+        // delete formData.rol;
         editarUsuario({
             variables: { _id, ...formData },
         });
@@ -51,7 +58,14 @@ const EditarUsuario = () => {
 
     if (queryLoading) return <div>Espere.... Cargando....</div>;
 
-    if (!queryData)  return <div>¡Error! en la consulta.</div>;
+    if (!queryData) return <div>¡Error! en la consulta.</div>;
+
+    if (data[0]?.rol == "ADMINISTRADOR") {
+        disabled_byRol = false;
+    } else {
+        disabled_byRol = true;
+    }
+
     return (
         <div className='flew flex-col w-full h-full items-center justify-center p-10'>
             <Link to='/usuarios'>
@@ -83,7 +97,7 @@ const EditarUsuario = () => {
                         label='Correo Electrónico'
                         type='email'
                         name='correo'
-                        defaultValue={queryData.Usuario.correo.charAt(0).toUpperCase() + queryData.Usuario.correo.slice(1)}
+                        defaultValue={queryData.Usuario.correo}
                         required={true}
                     />
                     <Input
@@ -99,8 +113,17 @@ const EditarUsuario = () => {
                         defaultValue={queryData.Usuario.estado}
                         required={true}
                         options={Enum_EstadoUsuario}
+                        disabled={disabled_byRol}
+
                     />
-                    <label className='my-3  block text-gray-500 font-bold md:text-left mb-1 md:mb-0 pr-4'>Rol: {queryData.Usuario.rol}</label>
+                    <DropDown
+                        label='Rol'
+                        name='rol'
+                        defaultValue={queryData.Usuario.rol}
+                        required={true}
+                        options={Enum_Rol}
+                        disabled={disabled_byRol}
+                    />
                     <ButtonLoading
                         disabled={Object.keys(formData).length === 0}
                         loading={mutationLoading}
