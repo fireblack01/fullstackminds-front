@@ -10,6 +10,7 @@ import useFormData from 'hooks/useFormData';
 import { Enum_EstadoUsuario } from 'utils/enums';
 import { Enum_Rol } from 'utils/enums';
 import { useUser } from 'context/userContext';
+import { toast } from 'react-toastify';
 
 const EditarUsuario = () => {
     const { userData } = useUser();
@@ -26,11 +27,8 @@ const EditarUsuario = () => {
         variables: { _id },
         pollInterval: 500,
     });
-    console.log(queryData)
-
     const [editarUsuario, { data: mutationData, loading: mutationLoading, error: mutationError }] =
         useMutation(EDITAR_USUARIO);
-
     const submitForm = (e) => {
         e.preventDefault();
         // delete formData.rol;
@@ -38,20 +36,25 @@ const EditarUsuario = () => {
             variables: { _id, ...formData },
         });
     };
-
     useEffect(() => {
         if (mutationData) {
-            console.log('El usuario ha sido modificado correctamente.');
+            toast('El usuario ha sido modificado correctamente.', {
+                icon: '👏',
+            });
         }
     }, [mutationData]);
 
     useEffect(() => {
         if (mutationError) {
-            console.log('¡Error! El usuario no ha sido modificado.');
+            toast('¡Error! El usuario no ha sido modificado.', {
+                icon: '😱',
+            });
         }
 
         if (queryError) {
-            console.log('¡Error! en la consulta.');
+            toast('¡Error! en la consulta.', {
+                icon: '😱',
+            });
         }
     }, [queryError, mutationError]);
 
