@@ -11,8 +11,6 @@ import { Enum_EstadoUsuario } from 'utils/enums';
 import { Enum_Rol } from 'utils/enums';
 import { useUser } from 'context/userContext';
 
-
-
 const EditarUsuario = () => {
     const { userData } = useUser();
     const data = [userData?.data?.Login];
@@ -26,6 +24,7 @@ const EditarUsuario = () => {
         loading: queryLoading,
     } = useQuery(GET_USUARIO, {
         variables: { _id },
+        pollInterval: 500,
     });
     console.log(queryData)
 

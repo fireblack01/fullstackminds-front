@@ -7,7 +7,9 @@ import PrivateRoute from 'components/PrivateRoute';
 
 const IndexUsuarios = () => {
 
-    const { data, error, loading } = useQuery(GET_USUARIOS);
+    const { data, error, loading } = useQuery(GET_USUARIOS, {
+        pollInterval: 500,
+      });
     useEffect(() => {
         if (error) {
             toast.error('Error al consultar los usuarios.');
