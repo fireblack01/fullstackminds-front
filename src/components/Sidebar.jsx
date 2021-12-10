@@ -1,16 +1,23 @@
 import React, { useState } from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, Link } from 'react-router-dom';
+import { useUser } from 'context/userContext';
 
 const SidebarLinks = () => {
-  return (
-    <ul className='mt-12'>
-      <SidebarRoute to='' title='Inicio' icon='fas fa-home' />
-      <SidebarRoute to='/page2' title='Pagina2' icon='fas fa-smile-wink' />
-      <SidebarRoute to='/category1' title='Catego 1' icon='fab fa-amazon' />
-      <SidebarRoute to='/category1/page1' title='Test' icon='fas fa-car' />
-      <SidebarRoute to='/usuarios' title='Usuarios' icon="fas fa-users" />
-    </ul>
-  );
+  const { userData } = useUser();
+  const data = [userData?.data?.Login];
+  if (data[0]?.correo) {
+    return (
+      <ul className='mt-12'>
+        <SidebarRoute to='' title='Inicio' icon='fas fa-home' />
+        <SidebarRoute to='/page2' title='Pagina2' icon='fas fa-smile-wink' />
+        <SidebarRoute to='/category1' title='Catego 1' icon='fab fa-amazon' />
+        <SidebarRoute to='/category1/page1' title='Test' icon='fas fa-car' />
+        <SidebarRoute to='/usuarios' title='Usuarios' icon="fas fa-users" />
+      </ul>
+    );
+  } else {
+    return <div></div>;
+  }
 };
 
 const Logo = () => {
@@ -18,6 +25,33 @@ const Logo = () => {
     <div className='py-3 w-full flex flex-col items-center justify-center'>
       <img src='mind-full.png' alt='Logo' className='h-16' />
       <span className='my-2 text-xl font-bold text-center'>Full Stack Minds Admin</span>
+    </div>
+  );
+};
+
+const LoggedUser = () => {
+  const { userData, setUserData } = useUser();
+  const data = [userData?.data?.Login];
+
+  return (
+    <div>
+      {data[0]?.correo ? (
+        data?.map((user) => (
+          <>
+            <span>
+              {user?.nombre} {user?.apellido}
+            </span>
+            <br />
+            <span>
+              <button>Editar</button> - <button onClick={() => setUserData()}>Logout</button>
+            </span>
+          </>
+        ))
+      ) : (
+        <Link to='/login'>
+          <button>LogIn</button>
+        </Link>
+      )}
     </div>
   );
 };
@@ -32,6 +66,7 @@ const Sidebar = () => {
         <div className='px-8'>
           <Logo />
           <SidebarLinks />
+          <LoggedUser />
         </div>
       </div>
       <div className='flex md:hidden w-full justify-between bg-gray-800 p-2 text-white'>

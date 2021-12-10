@@ -55,17 +55,25 @@ function App() {
       <UserContext.Provider value={{ userData, setUserData }}>
         <BrowserRouter>
           <Routes>
-            <Route path='/' element={<PrivateLayout />}>
-              <Route path='' element={<Index />} />
-              <Route path='page2' element={<Page2 />} />
-              <Route path='category1' element={<IndexCategory1 />} />
-              <Route path='category1/page1' element={<Category1 />} />
-              <Route path='usuarios' element={<IndexUsuarios />} />
-              <Route path='/usuarios/gestion/:id' element={<GestionUsuarios />} />
-              <Route path='/usuarios/editar/:_id' element={<EditarUsuario />} />
-              <Route path='/register' element={<Register />} />
-              <Route path='/login' element={<Login />} />
-            </Route>
+            {userData?.data ? (
+              <Route path='/' element={<PrivateLayout />}>
+                <Route path='' element={<Index />} />
+                <Route path='page2' element={<Page2 />} />
+                <Route path='category1' element={<IndexCategory1 />} />
+                <Route path='category1/page1' element={<Category1 />} />
+                <Route path='usuarios' element={<IndexUsuarios />} />
+                <Route path='/usuarios/gestion/:id' element={<GestionUsuarios />} />
+                <Route path='/usuarios/editar/:_id' element={<EditarUsuario />} />
+                <Route path='/register' element={<Register />} />
+                <Route path='/login' element={<Login />} />
+              </Route>
+            ) : (
+              <Route path='/' element={<PrivateLayout />}>
+                <Route path='' element={<Login />} />
+                <Route path='/register' element={<Register />} />
+                <Route path='/login' element={<Login />} />
+              </Route>
+            )}
           </Routes>
         </BrowserRouter>
       </UserContext.Provider>
