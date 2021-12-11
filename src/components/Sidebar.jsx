@@ -9,9 +9,6 @@ const SidebarLinks = () => {
     return (
       <ul className='mt-12'>
         <SidebarRoute to='' title='Inicio' icon='fas fa-home' />
-        <SidebarRoute to='/page2' title='Pagina2' icon='fas fa-smile-wink' />
-        <SidebarRoute to='/category1' title='Catego 1' icon='fab fa-amazon' />
-        <SidebarRoute to='/category1/page1' title='Test' icon='fas fa-car' />
         <SidebarRoute to='/usuarios' title='Usuarios' icon='fas fa-users' />
         <SidebarRoute
           to={'/usuarios/editar/' + data[0]?._id}
@@ -45,24 +42,25 @@ const LoggedUser = () => {
   };
   const navigate = useNavigate();
   return (
-    <div>
-      {data[0]?.correo ? (
-        data?.map((user) => (
-          <>
-            <span>
+    <div class='relative h-32 w-48 ...'>
+      <div class='absolute inset-x-0 bottom-0 h-0 ...'>
+        {data[0]?.correo &&
+          data?.map((user) => (
+            <>
+              <i className='fas fa-user-circle mr-1' />
               {user?.nombre} {user?.apellido}
-            </span>
-            <br />
-            <span>
-              <button>Editar</button> - <button onClick={handleLogout}>Logout</button>
-            </span>
-          </>
-        ))
-      ) : (
-        <Link to='/login'>
-          <button>LogIn</button>
-        </Link>
-      )}
+              <br />
+              <span>
+                <button
+                  onClick={handleLogout}
+                  className='mt-2 px-2 py-1 text-white bg-blue-500 hover:bg-blue-400 rounded-md'
+                >
+                  Logout
+                </button>
+              </span>
+            </>
+          ))}
+      </div>
     </div>
   );
 };

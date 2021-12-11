@@ -16,6 +16,7 @@ import Register from 'pages/auth/Register';
 import Login from 'pages/auth/Login';
 import 'styles/globals.css';
 import 'styles/tabla.css';
+import { toast } from 'react-toastify';
 const jwt = require('jsonwebtoken');
 
 // import PrivateRoute from 'components/PrivateRoute';
@@ -48,7 +49,9 @@ function App() {
     if (token) {
       jwt.verify(token, 'this-is-our-misiontic-2022-secret-key', (err, decoded) => {
         if (err) {
-          window.alert('Your session Expired');
+          toast('Susesión ha expirado.', {
+            icon: '❌',
+          });
           localStorage.removeItem('token');
           window.location.href = '/';
         }
