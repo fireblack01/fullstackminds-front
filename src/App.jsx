@@ -49,11 +49,10 @@ function App() {
     if (token) {
       jwt.verify(token, 'this-is-our-misiontic-2022-secret-key', (err, decoded) => {
         if (err) {
-          toast('Susesión ha expirado.', {
+          toast('Su sesión ha expirado.', {
             icon: '❌',
           });
           localStorage.removeItem('token');
-          window.location.href = '/';
         }
         setUserData(decoded);
       });
