@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { NavLink, Link } from 'react-router-dom';
+import { NavLink, Link, useNavigate } from 'react-router-dom';
 import { useUser } from 'context/userContext';
 
 const SidebarLinks = () => {
@@ -12,8 +12,12 @@ const SidebarLinks = () => {
         <SidebarRoute to='/page2' title='Pagina2' icon='fas fa-smile-wink' />
         <SidebarRoute to='/category1' title='Catego 1' icon='fab fa-amazon' />
         <SidebarRoute to='/category1/page1' title='Test' icon='fas fa-car' />
-        <SidebarRoute to='/usuarios' title='Usuarios' icon="fas fa-users" />
-        <SidebarRoute to={'/usuarios/editar/' +data[0]?._id} title="Mi Perfil" icon='fas fa-user' />
+        <SidebarRoute to='/usuarios' title='Usuarios' icon='fas fa-users' />
+        <SidebarRoute
+          to={'/usuarios/editar/' + data[0]?._id}
+          title='Mi Perfil'
+          icon='fas fa-user'
+        />
       </ul>
     );
   } else {
@@ -34,6 +38,12 @@ const LoggedUser = () => {
   const { userData, setUserData } = useUser();
   const data = [userData?.data?.Login];
 
+  const handleLogout = () => {
+    setUserData();
+    localStorage.removeItem('token');
+    navigate('/');
+  };
+  const navigate = useNavigate();
   return (
     <div>
       {data[0]?.correo ? (
@@ -44,7 +54,7 @@ const LoggedUser = () => {
             </span>
             <br />
             <span>
-              <button>Editar</button> - <button onClick={() => setUserData()}>Logout</button>
+              <button>Editar</button> - <button onClick={handleLogout}>Logout</button>
             </span>
           </>
         ))

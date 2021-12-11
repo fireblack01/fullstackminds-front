@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import PrivateLayout from 'layouts/PrivateLayout';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { ApolloProvider, ApolloClient, createHttpLink, InMemoryCache } from '@apollo/client';
@@ -10,12 +10,13 @@ import Page2 from 'pages/Page2';
 import IndexCategory1 from 'pages/category1/Index';
 import Category1 from 'pages/category1/CategoryPage1';
 import IndexUsuarios from 'pages/usuarios/Index';
-import GestionUsuarios from "pages/usuarios/Gestion"
+import GestionUsuarios from 'pages/usuarios/Gestion';
 import EditarUsuario from 'pages/usuarios/editar';
 import Register from 'pages/auth/Register';
 import Login from 'pages/auth/Login';
 import 'styles/globals.css';
 import 'styles/tabla.css';
+const jwt = require('jsonwebtoken');
 
 // import PrivateRoute from 'components/PrivateRoute';
 // const httpLink = createHttpLink({
@@ -42,6 +43,19 @@ const client = new ApolloClient({
 
 function App() {
   const [userData, setUserData] = useState({});
+  const token = localStorage.getItem('token');
+  useEffect(() => {
+    if (token) {
+      jwt.verify(token, 'this-is-our-misiontic-2022-secret-key', (err, decoded) => {
+        if (err) {
+          window.alert('Your session Expired');
+          localStorage.removeItem('token');
+          window.location.href = '/';
+        }
+        setUserData(decoded);
+      });
+    }
+  }, [token]);
 
   return (
     <ApolloProvider client={client}>

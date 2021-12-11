@@ -3,6 +3,7 @@ import { useMutation } from '@apollo/client';
 import { LOGIN } from 'graphql/auth/mutations';
 import { useUser } from 'context/userContext';
 import { useNavigate, Link } from 'react-router-dom';
+const jwt = require('jsonwebtoken');
 
 const Login = () => {
   const navigate = useNavigate();
@@ -13,6 +14,12 @@ const Login = () => {
 
   const [loginQuery, { data, loading, error }] = useMutation(LOGIN);
 
+  const handleLogin = (user) => {
+    setUserData(user);
+    const token = jwt.sign(user, 'this-is-our-misiontic-2022-secret-key', { expiresIn: '24h' });
+    localStorage.setItem('token', token);
+  };
+
   const login = async (e) => {
     e.preventDefault();
     loginQuery({
@@ -20,7 +27,7 @@ const Login = () => {
         correo: correo,
         password: password,
       },
-    }).then((user) => setUserData(user));
+    }).then((user) => handleLogin(user));
 
     navigate('/');
   };
