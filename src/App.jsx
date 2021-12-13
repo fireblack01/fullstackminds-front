@@ -17,6 +17,9 @@ import Login from 'pages/auth/Login';
 import 'styles/globals.css';
 import 'styles/tabla.css';
 import { toast } from 'react-toastify';
+import IndexProyectos from 'pages/proyectos/Index';
+import NuevoProyecto from 'pages/proyectos/NuevoProyecto';
+import IndexInscripciones from 'pages/inscripciones/Index';
 const jwt = require('jsonwebtoken');
 
 // import PrivateRoute from 'components/PrivateRoute';
@@ -80,6 +83,9 @@ function App() {
                 <Route path='usuarios' element={<IndexUsuarios />} />
                 <Route path='/usuarios/gestion/:id' element={<GestionUsuarios />} />
                 <Route path='/usuarios/editar/:_id' element={<EditarUsuario />} />
+                <Route path='/proyectos' element={<IndexProyectos />} />
+                <Route path='/proyectos/nuevo' element={<NuevoProyecto />} />
+                <Route path='/inscripciones' element={<IndexInscripciones />} />
                 <Route path='/register' element={<Register />} />
                 <Route path='/login' element={<Login />} />
               </Route>
