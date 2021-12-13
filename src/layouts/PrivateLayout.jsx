@@ -1,6 +1,8 @@
 import Sidebar from 'components/Sidebar';
 import { Outlet } from 'react-router';
 import React from 'react';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const PrivateLayout = () => {
   return (
@@ -9,8 +11,9 @@ const PrivateLayout = () => {
       <div className='flex w-full h-full bg-blue-50 bg-opacity-75'>
         <div className='w-full h-full  overflow-y-scroll p-7'>
           <Outlet />
-        </div>
+          </div>
       </div>
+      <ToastContainer />
     </div>
   );
 };

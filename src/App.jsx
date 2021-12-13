@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import PrivateLayout from 'layouts/PrivateLayout';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { ApolloProvider, ApolloClient, createHttpLink, InMemoryCache } from '@apollo/client';
@@ -10,12 +10,17 @@ import Page2 from 'pages/Page2';
 import IndexCategory1 from 'pages/category1/Index';
 import Category1 from 'pages/category1/CategoryPage1';
 import IndexUsuarios from 'pages/usuarios/Index';
-import GestionUsuarios from "pages/usuarios/Gestion"
+import GestionUsuarios from 'pages/usuarios/Gestion';
 import EditarUsuario from 'pages/usuarios/editar';
 import Register from 'pages/auth/Register';
 import Login from 'pages/auth/Login';
 import 'styles/globals.css';
 import 'styles/tabla.css';
+import { toast } from 'react-toastify';
+import IndexProyectos from 'pages/proyectos/Index';
+import NuevoProyecto from 'pages/proyectos/NuevoProyecto';
+import IndexInscripciones from 'pages/inscripciones/Index';
+const jwt = require('jsonwebtoken');
 
 // import PrivateRoute from 'components/PrivateRoute';
 // const httpLink = createHttpLink({
@@ -42,6 +47,20 @@ const client = new ApolloClient({
 
 function App() {
   const [userData, setUserData] = useState({});
+  const token = localStorage.getItem('token');
+  useEffect(() => {
+    if (token) {
+      jwt.verify(token, 'this-is-our-misiontic-2022-secret-key', (err, decoded) => {
+        if (err) {
+          toast('Su sesión ha expirado.', {
+            icon: '❌',
+          });
+          localStorage.removeItem('token');
+        }
+        setUserData(decoded);
+      });
+    }
+  }, [token]);
 
   return (
     <ApolloProvider client={client}>
@@ -64,6 +83,9 @@ function App() {
                 <Route path='usuarios' element={<IndexUsuarios />} />
                 <Route path='/usuarios/gestion/:id' element={<GestionUsuarios />} />
                 <Route path='/usuarios/editar/:_id' element={<EditarUsuario />} />
+                <Route path='/proyectos' element={<IndexProyectos />} />
+                <Route path='/proyectos/nuevo' element={<NuevoProyecto />} />
+                <Route path='/inscripciones' element={<IndexInscripciones />} />
                 <Route path='/register' element={<Register />} />
                 <Route path='/login' element={<Login />} />
               </Route>
