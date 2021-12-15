@@ -56,7 +56,9 @@ const IndexUsuarios = () => {
                                                 <td>{info.estado}</td>
                                                 <td className="d-flex justify-content-center">
                                                     <Link to={isAdmin || info.rol === "ESTUDIANTE" ? `/usuarios/editar/${info._id}` : ""}>
-                                                        <i className="fas fa-pencil-alt text-green-400 hover:text-green-600 cursor-pointer"
+                                                        <i className={(isAdmin || info.rol === "ESTUDIANTE" ?
+                                                            "fas fa-pencil-alt text-green-400" : "far fa-eye-slash text-red-400") +
+                                                            " hover:text-gray-500 cursor-pointer"}
                                                             disabled={true} />
                                                     </Link>
                                                 </td>
