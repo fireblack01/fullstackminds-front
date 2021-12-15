@@ -1,15 +1,36 @@
 import React, { useState } from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, Link, useNavigate } from 'react-router-dom';
+import { useUser } from 'context/userContext';
+import PrivateComponent from './PrivateComponent'
 
 const SidebarLinks = () => {
-  return (
-    <ul className='mt-12'>
-      <SidebarRoute to='' title='Inicio' icon='fas fa-home' />
-      <SidebarRoute to='/page2' title='Pagina2' icon='fas fa-smile-wink' />
-      <SidebarRoute to='/category1' title='Catego 1' icon='fab fa-amazon' />
-      <SidebarRoute to='/category1/page1' title='Test' icon='fas fa-car' />
-    </ul>
-  );
+  const { userData } = useUser();
+  const data = [userData?.data?.Login];
+  if (data[0]?.correo) {
+    return (
+      <ul className='mt-12'>
+        <SidebarRoute to='' title='Inicio' icon='fas fa-home' />
+        <PrivateComponent roleList={['ADMINISTRADOR', 'LIDER']}>
+          <SidebarRoute to='/usuarios' title='Usuarios' icon='fas fa-users' />
+        </PrivateComponent>
+        <SidebarRoute to='/proyectos' title='Proyectos' icon='fas fa-smile-wink' />
+        <PrivateComponent roleList={['ADMINISTRADOR', 'LIDER']}>
+          <SidebarRoute
+            to='/inscripciones'
+            title='Aprobacion Inscripciones'
+            icon='fas fa-users'
+          />
+        </PrivateComponent>
+        <SidebarRoute
+          to={'/usuarios/editar/' + data[0]?._id}
+          title='Mi Perfil'
+          icon='fas fa-user'
+        />
+      </ul>
+    );
+  } else {
+    return <div></div>;
+  }
 };
 
 const Logo = () => {
@@ -17,6 +38,40 @@ const Logo = () => {
     <div className='py-3 w-full flex flex-col items-center justify-center'>
       <img src='mind-full.png' alt='Logo' className='h-16' />
       <span className='my-2 text-xl font-bold text-center'>Full Stack Minds Admin</span>
+    </div>
+  );
+};
+
+const LoggedUser = () => {
+  const { userData, setUserData } = useUser();
+  const data = [userData?.data?.Login];
+
+  const handleLogout = () => {
+    setUserData();
+    localStorage.removeItem('token');
+    navigate('/');
+  };
+  const navigate = useNavigate();
+  return (
+    <div class='relative h-32 w-48 ...'>
+      <div class='absolute inset-x-0 bottom-0 h-0 ...'>
+        {data[0]?.correo &&
+          data?.map((user) => (
+            <>
+              <i className='fas fa-user-circle mr-1' />
+              {user?.nombre} {user?.apellido}
+              <br />
+              <span>
+                <button
+                  onClick={handleLogout}
+                  className='mt-2 px-2 py-1 text-white bg-blue-500 hover:bg-blue-400 rounded-md'
+                >
+                  Logout
+                </button>
+              </span>
+            </>
+          ))}
+      </div>
     </div>
   );
 };
@@ -31,6 +86,7 @@ const Sidebar = () => {
         <div className='px-8'>
           <Logo />
           <SidebarLinks />
+          <LoggedUser />
         </div>
       </div>
       <div className='flex md:hidden w-full justify-between bg-gray-800 p-2 text-white'>
