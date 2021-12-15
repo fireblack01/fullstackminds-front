@@ -10,7 +10,10 @@ const SidebarLinks = () => {
     return (
       <ul className='mt-12'>
         <SidebarRoute to='' title='Inicio' icon='fas fa-home' />
-        <SidebarRoute to='/usuarios' title='Usuarios' icon='fas fa-users' />
+        <PrivateComponent roleList={['ADMINISTRADOR', 'LIDER']}>
+          <SidebarRoute to='/usuarios' title='Usuarios' icon='fas fa-users' />
+        </PrivateComponent>
+
         <SidebarRoute
           to={'/usuarios/editar/' + data[0]?._id}
           title='Mi Perfil'

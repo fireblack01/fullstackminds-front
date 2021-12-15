@@ -7,7 +7,7 @@ import Input from 'components/Input';
 import ButtonLoading from 'components/ButtonLoading';
 import DropDown from 'components/Dropdown';
 import useFormData from 'hooks/useFormData';
-import { Enum_EstadoUsuario } from 'utils/enums';
+import { Enum_EstadoUsuario, Enum_EstadoUsuarioLider } from 'utils/enums';
 import { Enum_Rol } from 'utils/enums';
 import { useUser } from 'context/userContext';
 import { toast } from 'react-toastify';
@@ -16,6 +16,7 @@ const EditarUsuario = () => {
     const { userData } = useUser();
     const data = [userData?.data?.Login];
     var disabled_byRol = null;
+    var disabled_byProfile = null;
     const { form, formData, updateFormData } = useFormData(null);
     const { _id } = useParams();
 
@@ -62,15 +63,22 @@ const EditarUsuario = () => {
 
     if (!queryData) return <div>¡Error! en la consulta.</div>;
 
-    if (data[0]?.rol == "ADMINISTRADOR") {
+    if (data[0]?.rol === "ADMINISTRADOR") {
         disabled_byRol = false;
     } else {
         disabled_byRol = true;
     }
 
+    // Habilitar la edición de perfil (Nombre, correo y identificación) solo al usuario loggeado
+    if (data[0]?._id == _id) {
+        disabled_byProfile = false;
+    } else {
+        disabled_byProfile = true;
+    }
+
     return (
         <div className='flew flex-col w-full h-full items-center justify-center p-10'>
-            <Link to='/usuarios'>
+            <Link to={data[0]?.rol == "ESTUDIANTE" ? "" : '/usuarios'}>
                 <i className='fas fa-arrow-left text-gray-600 cursor-pointer font-bold text-xl hover:text-gray-900' />
             </Link>
             <h1 className='m-4 text-3xl text-gray-800 font-bold text-left'>Editar Usuario</h1>
@@ -87,6 +95,7 @@ const EditarUsuario = () => {
                         name='nombre'
                         defaultValue={queryData.Usuario.nombre.charAt(0).toUpperCase() + queryData.Usuario.nombre.slice(1)}
                         required={true}
+                        readOnly={disabled_byProfile}
                     />
                     <Input
                         label='Apellido'
@@ -94,6 +103,8 @@ const EditarUsuario = () => {
                         name='apellido'
                         defaultValue={queryData.Usuario.apellido.charAt(0).toUpperCase() + queryData.Usuario.apellido.slice(1)}
                         required={true}
+                        readOnly={disabled_byProfile}
+
                     />
                     <Input
                         label='Correo Electrónico'
@@ -101,6 +112,7 @@ const EditarUsuario = () => {
                         name='correo'
                         defaultValue={queryData.Usuario.correo}
                         required={true}
+                        readOnly={disabled_byProfile}
                     />
                     <Input
                         label='Identificación'
@@ -108,14 +120,15 @@ const EditarUsuario = () => {
                         name='identificacion'
                         defaultValue={queryData.Usuario.identificacion.charAt(0).toUpperCase() + queryData.Usuario.identificacion.slice(1)}
                         required={true}
+                        readOnly={disabled_byProfile}
                     />
                     <DropDown
                         label='Estado'
                         name='estado'
                         defaultValue={queryData.Usuario.estado}
                         required={true}
-                        options={Enum_EstadoUsuario}
-                        disabled={disabled_byRol}
+                        options={!disabled_byRol ? Enum_EstadoUsuario : Enum_EstadoUsuarioLider}
+                        disabled={disabled_byRol && !disabled_byProfile}
 
                     />
                     <DropDown
@@ -124,7 +137,7 @@ const EditarUsuario = () => {
                         defaultValue={queryData.Usuario.rol}
                         required={true}
                         options={Enum_Rol}
-                        disabled={disabled_byRol}
+                        disabled={true}
                     />
                     <ButtonLoading
                         disabled={Object.keys(formData).length === 0}
