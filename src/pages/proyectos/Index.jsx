@@ -9,7 +9,7 @@ import { EDITAR_PROYECTO } from 'graphql/proyectos/mutations';
 import useFormData from 'hooks/useFormData';
 import PrivateComponent from 'components/PrivateComponent';
 import { Link } from 'react-router-dom';
-import { CREAR_INSCRIPCION } from 'graphql/inscripciones/mutaciones';
+import { CREAR_INSCRIPCION } from 'graphql/inscripciones/mutations';
 import { useUser } from 'context/userContext';
 import { toast } from 'react-toastify';
 import {
