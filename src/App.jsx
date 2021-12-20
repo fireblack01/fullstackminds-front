@@ -41,7 +41,7 @@ const jwt = require('jsonwebtoken');
 const client = new ApolloClient({
   cache: new InMemoryCache(),
   // link: authLink.concat(httpLink),
-  uri: 'http://localhost:3001/graphql',
+  uri: ' https://fullstackminds-back.herokuapp.com/graphql',
 });
 
 function App() {
